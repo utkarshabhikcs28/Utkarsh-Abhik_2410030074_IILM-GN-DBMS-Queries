@@ -1,0 +1,144 @@
+EXPERIMENT :- 03
+
+# 1. List all employees and jobs in Department 30 in descending order by salary.
+SELECT ENAME, JOB, SAL FROM EMPLOYEE WHERE DEPTNO = 30 ORDER BY SAL DESC ;
++--------+----------+------+
+| ENAME  | JOB      | SAL  |
++--------+----------+------+
+| BLAKE  | MANAGER  | 3135 |
+| ALLEN  | SALESMAN | 1600 |
+| WARD   | SALESMAN | 1600 |
+| TURNER | SALESMAN | 1500 |
+| MARTIN | SALESMAN | 1250 |
+| JAMES  | CLERK    | 1045 |
++--------+----------+------+
+6 rows in set (0.001 sec)
+
+
+# 2. List job and Department Number of employees whose name are five letters long begin with “A” and end with “N”.
+SELECT ENAME, JOB, DEPTNO FROM EMPLOYEE WHERE ENAME LIKE 'A___N';
++-------+----------+--------+
+| ENAME | JOB      | DEPTNO |
++-------+----------+--------+
+| ALLEN | SALESMAN |     30 |
++-------+----------+--------+
+1 row in set (0.001 sec)
+
+
+# 3. Display the name of employees whose name start with alphabet S.
+SELECT ENAME FROM EMPLOYEE WHERE ENAME LIKE 'S%';
++-------+
+| ENAME |
++-------+
+| SMITH |
+| SCOTT |
++-------+
+2 rows in set (0.001 sec)
+
+
+# 4. Display the names of employees whose name ends with alphabet S.
+SELECT ENAME FROM EMPLOYEE WHERE ENAME LIKE '%S';
++-------+
+| ENAME |
++-------+
+| JONES |
+| ADAMS |
+| JAMES |
++-------+
+3 rows in set (0.001 sec)
+
+
+# 5. Display the names of employees working in department number 10 or 20 or 40 or employees working as clerks, salesman or analyst.
+SELECT * FROM EMPLOYEE WHERE DEPTNO IN(10,20,40) OR JOB IN ('CLERK', 'SALESMAN', 'ANALYST');
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  880 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1600 |  300 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 3273 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-07-09 | 2695 | NULL |     20 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3300 | NULL |     40 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5500 | NULL |     20 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1210 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 | 1045 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3300 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1430 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+13 rows in set (0.001 sec)
+
+
+# 6. Display employee number and names for employees who earn commission.
+SELECT EMPNO, ENAME, COMM FROM EMPLOYEE WHERE COMM > 0 AND COMM IS NOT NULL;
++-------+--------+------+
+| EMPNO | ENAME  | COMM |
++-------+--------+------+
+|  7499 | ALLEN  |  300 |
+|  7521 | WARD   |  300 |
+|  7654 | MARTIN | 1400 |
++-------+--------+------+
+3 rows in set (0.001 sec)
+
+
+# 7. Display employee number and total salary for each employee.
+SELECT EMPNO, SAL + IFNULL(COMM, 0) AS TOTAL_SAL FROM EMPLOYEE; 
++-------+-----------+
+| EMPNO | TOTAL_SAL |
++-------+-----------+
+|  7369 |       880 |
+|  7499 |      1900 |
+|  7521 |      1900 |
+|  7566 |      3273 |
+|  7654 |      2650 |
+|  7698 |      3135 |
+|  7782 |      2695 |
+|  7788 |      3300 |
+|  7839 |      5500 |
+|  7844 |      1500 |
+|  7876 |      1210 |
+|  7900 |      1045 |
+|  7902 |      3300 |
+|  7934 |      1430 |
++-------+-----------+
+14 rows in set (0.001 sec)
+
+
+# 8. Display employee number and annual salary for each employee.
+SELECT EMPNO, SAL * 12 AS ANNUAL_SALARY FROM EMPLOYEE;
++-------+---------------+
+| EMPNO | ANNUAL_SALARY |
++-------+---------------+
+|  7369 |         10560 |
+|  7499 |         19200 |
+|  7521 |         19200 |
+|  7566 |         39276 |
+|  7654 |         15000 |
+|  7698 |         37620 |
+|  7782 |         32340 |
+|  7788 |         39600 |
+|  7839 |         66000 |
+|  7844 |         18000 |
+|  7876 |         14520 |
+|  7900 |         12540 |
+|  7902 |         39600 |
+|  7934 |         17160 |
++-------+---------------+
+14 rows in set (0.001 sec)
+
+
+# 9. Display the names of all employees working as clerks and drawing a salary more than 3,000.
+SELECT ENAME FROM EMPLOYEE WHERE JOB = 'CLERK' AND SAL > 3000;
+   Empty set (0.001 sec)
+
+
+# 10. Display the names of employees who are working as clerk, salesman or analyst and drawing a salary more than 3,000.
+SELECT ENAME FROM EMPLOYEE WHERE JOB IN ('CLERK', 'SALESMAN', 'ANALYST') AND SAL > 3000;
++-------+
+| ENAME |
++-------+
+| SCOTT |
+| FORD  |
++-------+
+2 rows in set (0.001 sec)
